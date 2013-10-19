@@ -1,0 +1,12 @@
+<h1>Anderson's Room</h1>
+
+<ul>
+  <li>Current Temperature: <%= @latest_reading.temp %></li>
+  <li>Downstairs Temperautre: <%= @nest.current_temperature %> </li>
+  <li>Desired Temperature: <%= ENV['TARGET_TEMP'] %>  </li>
+  <li>Nest Set To: <%= @nest.temperature %> </li>
+</ul>
+
+<br>
+
+<%= link_to 'New Reading', new_reading_path %>
