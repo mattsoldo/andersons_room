@@ -49,6 +49,7 @@ class ReadingsController < ApplicationController
       else
         format.html { render action: 'edit' }
         format.json { render json: @reading.errors, status: :unprocessable_entity }
+        puts reading_params
       end
     end
   end
