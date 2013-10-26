@@ -1,7 +1,7 @@
 <h1>Anderson's Room</h1>
 
 <ul>
-  <li>Current Temperature: <%= @latest_reading.temp %></li>
+  <li>Current Temperature: <%= @latest_reading.temp if @latest_reading %></li>
   <li>Downstairs Temperautre: <%= @nest.current_temperature %> </li>
   <li>Desired Temperature: <%= ENV['TARGET_TEMP'] %>  </li>
   <li>Nest Set To: <%= @nest.temperature %> </li>
