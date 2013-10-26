@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'nest_thermostat', :git => 'https://github.com/mattsoldo/nest_thermostat.git'
+gem 'rails_12factor' # include for Heroku
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
