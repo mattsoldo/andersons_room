@@ -33,7 +33,7 @@ class ReadingsController < ApplicationController
         ## if the room temperature is less than the target
         ## then turn on the thermostat
         puts "evaluating temperature"
-        if @reading.temp < ENV['MIN_TEMP'].to_f
+        if @reading.temp < ENV['TARGET_TEMP'].to_f
           setup_nest_api
           puts "Anderson is cold, it is #{@reading.temp}, turning on the thermostat"
           @nest.device='Upstairs'
@@ -42,8 +42,8 @@ class ReadingsController < ApplicationController
           @nest.temperature = @nest.current_temperature + 2.0
         end
         ## if we are at or above the target temp, turn it off
-        if @reading.temp >= ENV['MAX_TEMP'].to_f
-          puts "target temp (#{ENV['MAX_TEMP']}) met at #{@reading.temp}, turning off nest"
+        if @reading.temp >= ENV['TARGET_TEMP'].to_f
+          puts "target temp (#{ENV['TARGET_TEMP']}) met at #{@reading.temp}, turning off nest"
           setup_nest_api
           @nest.device='Upstairs'
           @nest.temperature = @nest.current_temperature - 5.0
