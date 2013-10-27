@@ -95,5 +95,6 @@ class ReadingsController < ApplicationController
 
     def setup_nest_api
       @nest = NestThermostat::Nest.new({email: ENV['NEST_EMAIL'], password: ENV['NEST_PASS']})
+      @nest.device='Upstairs'
     end
 end
