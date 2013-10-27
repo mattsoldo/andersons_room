@@ -1,8 +1,14 @@
 <h1>Anderson's Room</h1>
 
+<% if @latest_reading.temp < ENV['MIN_TEMP'].to_f %>
+  <h2>Anderson is freezing his balls off</h2>
+<% elsif @latest_reading.temp > ENV['MIN_TEMP'].to_f %>
+  <h2> Anderson is sweating his balls off</h2>
+<% end %>
+
 <ul>
   <li>Current Temperature: <%= @latest_reading.temp if @latest_reading %></li>
-  <li>Downstairs Temperautre: <%= @nest.current_temperature %> </li>
+  <li>Downstairs Temperature: <%= @nest.current_temperature %> </li>
   <li>Desired Temperature: <%= ENV['TARGET_TEMP'] %>  </li>
   <li>Nest Set To: <%= @nest.temperature %> </li>
 </ul>

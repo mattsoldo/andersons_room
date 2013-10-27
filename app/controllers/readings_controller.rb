@@ -30,6 +30,24 @@ class ReadingsController < ApplicationController
 
     respond_to do |format|
       if @reading.save
+        ## if the room temperature is less than the target
+        ## then turn on the thermostat
+        puts "evaluating temperature"
+        if @reading.temp < ENV['MIN_TEMP'].to_f
+          setup_nest_api
+          puts "Anderson is cold, it is #{@reading.temp}, turning on the thermostat"
+          @nest.device='Upstairs'
+          ## Set the device to higher than it's current
+          ## reading to force it on
+          @nest.temperature = @nest.current_temperature + 2.0
+        end
+        ## if we are at or above the target temp, turn it off
+        if @reading.temp >= ENV['MAX_TEMP'].to_f
+          puts "target temp (#{ENV['MAX_TEMP']}) met at #{@reading.temp}, turning off nest"
+          setup_nest_api
+          @nest.device='Upstairs'
+          @nest.temperature = @nest.current_temperature - 5.0
+        end
         format.html { redirect_to @reading, notice: 'Reading was successfully created.' }
         format.json { render action: 'show', status: :created, location: @reading }
       else
@@ -43,7 +61,7 @@ class ReadingsController < ApplicationController
   # PATCH/PUT /readings/1.json
   def update
     respond_to do |format|
-      if @reading.update(reading_params)
+      if @reading.update(reading_params)        
         format.html { redirect_to @reading, notice: 'Reading was successfully updated.' }
         format.json { head :no_content }
       else
