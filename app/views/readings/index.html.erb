@@ -11,6 +11,7 @@
   <li>Downstairs Temperature: <%= @nest.current_temperature %> </li>
   <li>Desired Temperature: <%= ENV['TARGET_TEMP'] %>  </li>
   <li>Nest Set To: <%= @nest.temperature %> </li>
+  <li>It has been <%= time_ago_in_words(@latest_reading.created_at)%> since the last reading.</li>
 </ul>
 
 <br>
