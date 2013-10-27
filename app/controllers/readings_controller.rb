@@ -36,7 +36,6 @@ class ReadingsController < ApplicationController
         if @reading.temp < ENV['TARGET_TEMP'].to_f
           setup_nest_api
           puts "Anderson is cold, it is #{@reading.temp}, turning on the thermostat"
-          @nest.device='Upstairs'
           ## Set the device to higher than it's current
           ## reading to force it on
           @nest.temperature = @nest.current_temperature + 2.0
@@ -45,7 +44,6 @@ class ReadingsController < ApplicationController
         if @reading.temp >= ENV['TARGET_TEMP'].to_f
           puts "target temp (#{ENV['TARGET_TEMP']}) met at #{@reading.temp}, turning off nest"
           setup_nest_api
-          @nest.device='Upstairs'
           @nest.temperature = @nest.current_temperature - 5.0
         end
         format.html { redirect_to @reading, notice: 'Reading was successfully created.' }

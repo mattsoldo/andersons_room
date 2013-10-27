@@ -1,9 +1,11 @@
 <h1>Anderson's Room</h1>
 
-<% if @latest_reading.temp < ENV['TARGET_TEMP'].to_f %>
+<% if @latest_reading.temp < 64.0 %>
   <h2>Anderson is freezing his balls off</h2>
-<% elsif @latest_reading.temp > ENV['TARGET_TEMP'].to_f %>
+<% elsif @latest_reading.temp > 68.0 %>
   <h2> Anderson is sweating his balls off</h2>
+<% else %>
+  <h2> Anderson is very cozy</h2>
 <% end %>
 
 <ul>
