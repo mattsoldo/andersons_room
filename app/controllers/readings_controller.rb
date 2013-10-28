@@ -26,31 +26,33 @@ class ReadingsController < ApplicationController
   # POST /readings
   # POST /readings.json
   def create
-    @reading = Reading.new(reading_params)
-
-    respond_to do |format|
-      if @reading.save
-        ## if the room temperature is less than the target
-        ## then turn on the thermostat
-        puts "evaluating temperature"
-        if @reading.temp < ENV['TARGET_TEMP'].to_f
-          setup_nest_api
-          puts "Anderson is cold, it is #{@reading.temp}, turning on the thermostat"
-          ## Set the device to higher than it's current
-          ## reading to force it on
-          @nest.temperature = @nest.current_temperature + 2.0
+    @latest_reading = Reading.last
+    if Time.now - @latest_reading.created_at > 200
+      @reading = Reading.new(reading_params)
+      respond_to do |format|
+        if @reading.save
+          ## if the room temperature is less than the target
+          ## then turn on the thermostat
+          puts "evaluating temperature"
+          if @reading.temp < ENV['TARGET_TEMP'].to_f
+            setup_nest_api
+            puts "Anderson is cold, it is #{@reading.temp}, turning on the thermostat"
+            ## Set the device to higher than it's current
+            ## reading to force it on
+            @nest.temperature = @nest.current_temperature + 2.0
+          end
+          ## if we are at or above the target temp, turn it off
+          if @reading.temp >= ENV['TARGET_TEMP'].to_f
+            puts "target temp (#{ENV['TARGET_TEMP']}) met at #{@reading.temp}, turning off nest"
+            setup_nest_api
+            @nest.temperature = @nest.current_temperature - 5.0
+          end
+          format.html { redirect_to @reading, notice: 'Reading was successfully created.' }
+          format.json { render action: 'show', status: :created, location: @reading }
+        else
+          format.html { render action: 'new' }
+          format.json { render json: @reading.errors, status: :unprocessable_entity }
         end
-        ## if we are at or above the target temp, turn it off
-        if @reading.temp >= ENV['TARGET_TEMP'].to_f
-          puts "target temp (#{ENV['TARGET_TEMP']}) met at #{@reading.temp}, turning off nest"
-          setup_nest_api
-          @nest.temperature = @nest.current_temperature - 5.0
-        end
-        format.html { redirect_to @reading, notice: 'Reading was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @reading }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @reading.errors, status: :unprocessable_entity }
       end
     end
   end
