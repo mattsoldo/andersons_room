@@ -1,7 +1,10 @@
 class Reading < ActiveRecord::Base
-	@@nest = NestThermostat::Nest.new({email: ENV['NEST_EMAIL'], password: ENV['NEST_PASS']})
-  @@nest.device='Upstairs'
-
+	begin
+    @@nest = NestThermostat::Nest.new({email: ENV['NEST_EMAIL'], password: ENV['NEST_PASS']})
+    @@nest.device='Upstairs'
+  rescue
+    puts "nest API not available"
+  end
   validates :temp, presence: true
 
   validate :within_ci, on: :create
