@@ -85,7 +85,7 @@ class Reading < ActiveRecord::Base
       end
     end
     ## if we are at or above the target temp, turn it off
-    if Reading.running_average(2) >= ENV['TARGET_TEMP'].to_f
+    if Reading.running_average(3) >= ENV['TARGET_TEMP'].to_f
       if Reading.nest_on?
         puts "target temp (#{ENV['TARGET_TEMP']}) met at #{temp}, turning off nest"
         @@nest.temperature = @@nest.current_temperature - 5.0
