@@ -60,7 +60,9 @@ class Reading < ActiveRecord::Base
                               order('id desc').first
     # if the last known state is more than 10 minutes old
     # consider it unknown
-    if Time.now - last_reading_using_nest.created_at > 5*60
+    if last_reading_using_nest.nil?
+      return nil
+    elsif Time.now - last_reading_using_nest.created_at > 5*60
       return nil
     else
       last_reading_using_nest.nest_on
