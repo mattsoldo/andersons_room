@@ -79,9 +79,9 @@ class Reading < ActiveRecord::Base
       if Reading.nest_on?.nil? || Reading.nest_on? == false
         puts "Anderson is cold, it is #{temp}, turning on the thermostat"
         @@nest.temperature = @@nest.current_temperature + 2.0
-        nest_on = true
-        nest_updated=true
-        save
+        self.nest_on = true
+        self.nest_updated=true
+        self.save
       end
     end
     ## if we are at or above the target temp, turn it off
@@ -89,9 +89,9 @@ class Reading < ActiveRecord::Base
       if Reading.nest_on?
         puts "target temp (#{ENV['TARGET_TEMP']}) met at #{temp}, turning off nest"
         @@nest.temperature = @@nest.current_temperature - 5.0
-        nest_on = false
-        nest_updated=true
-        save
+        self.nest_on = false
+        self.nest_updated=true
+        self.save
       end
     end
   end
