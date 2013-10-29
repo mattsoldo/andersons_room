@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131018204218) do
+ActiveRecord::Schema.define(version: 20131029055429) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,10 @@ ActiveRecord::Schema.define(version: 20131018204218) do
     t.datetime "recorded_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "nest_updated"
+    t.boolean  "nest_on"
   end
+
+  add_index "readings", ["nest_updated"], name: "index_readings_on_nest_updated", using: :btree
 
 end

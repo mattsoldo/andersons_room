@@ -10,9 +10,9 @@
 
 <ul>
   <li>Current Temperature: <%= @latest_reading.temp if @latest_reading %></li>
-  <li>Downstairs Temperature: <%= @nest.current_temperature %> </li>
+  <li>Downstairs Temperature: <%= Reading.nest_current_temp %> </li>
   <li>Desired Temperature: <%= ENV['TARGET_TEMP'] %>  </li>
-  <li>Nest Set To: <%= @nest.temperature %> </li>
+  <li>Nest Set To: <%= Reading.nest_set_to %> </li>
   <li>It has been <%= time_ago_in_words(@latest_reading.created_at)%> since the last reading.</li>
 </ul>
 
