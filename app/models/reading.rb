@@ -36,8 +36,8 @@ class Reading < ActiveRecord::Base
   end
 
   def within_ci
-    unless (temp > Reading.average('temp') - (Reading.stddev * 2)) && 
-       (temp < Reading.average('temp') + (Reading.stddev * 2))
+    unless (temp > Reading.average('temp') - (Reading.stddev * 1.5)) && 
+       (temp < Reading.average('temp') + (Reading.stddev * 1.5))
       errors.add(:temp, "is not within the confidence interval")
     end
   end
