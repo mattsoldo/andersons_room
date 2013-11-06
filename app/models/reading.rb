@@ -48,7 +48,7 @@ class Reading < ActiveRecord::Base
     
     if last_reading_using_nest.nil?
       return true
-    elsif Time.now - last_reading_using_nest.created_at > 60*5
+    elsif Time.now - last_reading_using_nest.created_at > 60*6
       return true
     else
       return false
