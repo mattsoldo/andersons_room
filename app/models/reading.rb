@@ -73,8 +73,9 @@ class Reading < ActiveRecord::Base
     ## if the room temperature is less than the target
     ## then turn on the thermostat
     puts "evaluating temperature"
-    if Reading.running_average(4) < ENV['TARGET_TEMP'].to_f && Reading.use_nest_api?
-      ## Set the device to higher than it's current
+    if (Reading.running_average(4) < ENV['TARGET_TEMP'].to_f) && Reading.use_nest_api?
+      ## Set the device to higher than it's currentu
+      
       ## reading to force it on
       if Reading.nest_on?.nil? || Reading.nest_on? == false
         puts "Anderson is cold, it is #{temp}, turning on the thermostat"
