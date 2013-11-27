@@ -1,6 +1,6 @@
 class ReadingsController < ApplicationController
   before_action :set_reading, only: [:show, :edit, :update, :destroy]
-  before_action :setup_nest_api, only: [:index]
+  # before_action :setup_nest_api, only: [:index]
 
   # GET /readings
   # GET /readings.json
@@ -26,6 +26,8 @@ class ReadingsController < ApplicationController
   # POST /readings
   # POST /readings.json
   def create
+    puts "New Reading: #{request.headers["X-Request-ID"]}, params: #{reading_params}"
+
     @reading = Reading.new(reading_params)
     respond_to do |format|
       if @reading.save
